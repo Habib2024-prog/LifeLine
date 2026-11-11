@@ -1,0 +1,204 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>LifeLine – Clickable prototype</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Poppins:wght@600;700&display=swap">
+<style>
+:root{--red:#C8283A;--redd:#A81F2F;--navy:#1B2B4B;--teal:#0B7A70;--amber:#B45309;--bg:#FFF8F6;--card:#fff;--ink:#1E2433;--mute:#5B6478;--line:#E6E2E0;--tint:#FBE9EB;--tt:#E3F4F1;--at:#FDF0E1;--foot:#1B2B4B;color-scheme:light;
+box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--red:#D8374A;--redd:#E5485A;--teal:#4FD1C0;--amber:#F0A04B;--bg:#141A28;--card:#1E2638;--ink:#EEF0F6;--mute:#A3ABBD;--line:#2F3950;--tint:#3A1D26;--tt:#12332F;--at:#3A2A14;--foot:#0E1422;color-scheme:dark}}
+:root[data-theme="dark"]{--red:#D8374A;--redd:#E5485A;--teal:#4FD1C0;--amber:#F0A04B;--bg:#141A28;--card:#1E2638;--ink:#EEF0F6;--mute:#A3ABBD;--line:#2F3950;--tint:#3A1D26;--tt:#12332F;--at:#3A2A14;--foot:#0E1422;color-scheme:dark}
+html{scroll-padding-top:env(safe-area-inset-top,0px)}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--ink);font:400 16px/1.55 Inter,system-ui,Arial,sans-serif}
+body::before{content:"";position:fixed;inset:0 0 auto;height:env(safe-area-inset-top,0px);background:var(--card);z-index:10}
+h1,h2,h3{font-family:Poppins,Inter,Arial,sans-serif;margin:0;line-height:1.15;color:var(--ink)}
+h1{font-size:clamp(32px,5vw,52px);font-weight:700;letter-spacing:-.02em}
+h2{font-size:clamp(24px,3vw,32px);font-weight:700}
+h3{font-size:17px;font-weight:600}
+p{margin:0}.mute{color:var(--mute)}
+.wrap{max-width:1120px;margin:auto;padding:0 20px}
+header{position:sticky;top:env(safe-area-inset-top,0px);z-index:9;background:var(--card);border-bottom:1px solid var(--line)}
+header .wrap{display:flex;align-items:center;gap:20px;height:64px}
+.logo{font:700 21px Poppins,sans-serif;display:flex;align-items:center;gap:8px;color:var(--ink);background:none;border:0;cursor:pointer;padding:0}
+nav{display:flex;gap:4px;flex:1}
+nav a,.lnk{white-space:nowrap;color:var(--ink);text-decoration:none;font-weight:500;font-size:14.5px;padding:8px 9px;border-radius:8px;cursor:pointer;background:none;border:0;font-family:inherit}
+nav a:hover,.lnk:hover{background:var(--tint)}nav a[aria-current]{color:var(--red);box-shadow:inset 0 -3px 0 var(--red);border-radius:0}
+.acts{display:flex;align-items:center;gap:8px}
+#menu{display:none}
+.btn{font:600 15px Inter,sans-serif;border-radius:10px;padding:11px 18px;border:2px solid var(--red);background:var(--red);color:#fff;cursor:pointer;min-height:44px}
+.btn:hover{background:var(--redd);border-color:var(--redd)}
+.btn.o{background:transparent;color:var(--red)}.btn.o:hover{background:var(--tint)}
+.btn.n{background:var(--navy);border-color:var(--navy)}
+.btn:disabled{background:var(--line);border-color:var(--line);color:var(--mute);cursor:default}
+:focus-visible{outline:3px solid var(--teal);outline-offset:2px}
+[hidden]{display:none!important}
+.pg{padding:40px 0 64px}
+.hero{display:grid;grid-template-columns:1.25fr 1fr;gap:40px;align-items:center;padding:48px 0 40px}
+.hero p.lead{font-size:18px;color:var(--mute);margin:14px 0 24px;max-width:52ch}
+.step{font-weight:600;font-size:14px;margin:16px 0 8px}
+.chips{display:grid;grid-template-columns:repeat(4,1fr);gap:8px;max-width:440px}
+.chip{font:600 20px Poppins,sans-serif;padding:14px 0;border-radius:12px;border:2px solid var(--line);background:var(--card);color:var(--ink);cursor:pointer}
+.chip:hover{border-color:var(--red)}.chip[aria-pressed=true]{background:var(--red);border-color:var(--red);color:#fff}
+select,input,textarea{font:400 15px Inter,sans-serif;width:100%;padding:11px 12px;border-radius:10px;border:2px solid var(--line);background:var(--card);color:var(--ink);min-height:44px}
+label{display:block;font-weight:600;font-size:14px;margin:0 0 6px}
+.row{display:flex;gap:12px;align-items:end;flex-wrap:wrap}.row>*{flex:1;min-width:160px}
+.card{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:18px}
+.live{border-left:6px solid var(--red);padding:24px}
+.live .t{font:700 38px Poppins,sans-serif;color:var(--red);letter-spacing:.02em}
+.bg{width:56px;height:56px;border-radius:50% 50% 50% 8px;transform:rotate(-45deg);background:var(--red);color:#fff;display:grid;place-items:center;flex:none}
+.bg b{transform:rotate(45deg);font:700 18px Poppins,sans-serif}
+.tag{font-size:12px;font-weight:600;padding:3px 10px;border-radius:99px}
+.crit{background:var(--tint);color:var(--red)}.urg{background:var(--at);color:var(--amber)}.plan{background:var(--tt);color:var(--teal)}
+.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(300px,1fr));gap:16px}
+.rq,.dn{display:grid;grid-template-columns:auto 1fr;gap:14px;align-items:center}
+.rq .btn,.dn .btn{grid-column:1/-1}.rq .tag{justify-self:start;grid-column:2}
+.trust{display:grid;grid-template-columns:repeat(3,1fr);gap:16px;margin:8px 0 48px}
+.trust div{border-top:3px solid var(--teal);padding-top:12px}
+.steps{display:grid;grid-template-columns:repeat(3,1fr);gap:16px;counter-reset:s}
+.steps .card{counter-increment:s}.steps .card::before{content:counter(s);display:grid;place-items:center;width:32px;height:32px;border-radius:50%;background:var(--navy);color:#fff;font-weight:700;margin-bottom:10px}
+.band{background:var(--navy);color:#fff;border-radius:16px;padding:28px;display:flex;justify-content:space-between;align-items:center;gap:16px;flex-wrap:wrap;margin-top:48px}
+.band h2{color:#fff}
+.hd{display:flex;justify-content:space-between;align-items:end;margin:40px 0 16px;gap:12px}
+.two{display:grid;grid-template-columns:1.6fr 1fr;gap:24px;align-items:start}
+.f2{display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-bottom:16px}
+.urgs{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin-bottom:16px}
+.urgs label{border:2px solid var(--line);border-radius:12px;padding:12px;font-weight:600;cursor:pointer;margin:0}
+.urgs input{width:auto;min-height:0;margin-right:6px}.urgs label:has(input:checked){border-color:var(--red);background:var(--tint)}
+.urgs small{display:block;font-weight:400;color:var(--mute)}
+.err{color:var(--red);font-weight:500;margin:0 0 12px}
+.tl{list-style:none;margin:16px 0 0;padding:0}.tl li{padding:0 0 16px 34px;position:relative}
+.tl li::before{content:"";position:absolute;left:0;top:2px;width:20px;height:20px;border-radius:50%;border:2px solid var(--navy);background:var(--card)}
+.tl li.on::before{background:var(--teal);border-color:var(--teal)}
+table{width:100%;border-collapse:collapse;font-size:15px}th,td{text-align:left;padding:10px 8px;border-bottom:1px solid var(--line)}
+details{background:var(--card);border:1px solid var(--line);border-radius:12px;padding:14px 16px;margin-bottom:10px}summary{font-weight:600;cursor:pointer}
+.dash{display:grid;grid-template-columns:230px 1fr;gap:28px}
+.side{display:flex;flex-direction:column;gap:4px;align-self:start}.side a{padding:10px 12px;border-radius:10px;color:var(--ink);text-decoration:none;font-weight:500}.side a.on{background:var(--navy);color:#fff}
+.sw{width:52px;min-height:0;height:30px;border-radius:99px;border:0;background:var(--line);position:relative;cursor:pointer;padding:0}
+.sw::after{content:"";position:absolute;top:3px;left:3px;width:24px;height:24px;border-radius:50%;background:#fff;transition:left .15s}.sw[aria-checked=true]{background:var(--teal)}.sw[aria-checked=true]::after{left:25px}
+.ring{display:flex;gap:20px;align-items:center}
+.ok{background:var(--tt);color:var(--teal);font-weight:600;border-radius:10px;padding:10px 12px;grid-column:1/-1}
+footer{background:var(--foot);color:#fff;padding:32px 0;margin-top:24px}footer p{color:#C9D0E0;font-size:14px;max-width:70ch;margin-top:8px}
+#toast{position:fixed;left:50%;bottom:calc(24px + env(safe-area-inset-bottom,0px));transform:translateX(-50%);background:var(--navy);color:#fff;padding:12px 18px;border-radius:12px;font-weight:500;z-index:20;max-width:90vw}
+#toast[hidden]{display:none}
+@media (max-width:820px){.hero,.two,.dash,.steps,.trust{grid-template-columns:1fr}.f2,.urgs{grid-template-columns:1fr}}
+@media (max-width:1060px){nav{display:none;position:absolute;top:64px;left:0;right:0;background:var(--card);flex-direction:column;padding:8px 20px 16px;border-bottom:1px solid var(--line)}nav.open{display:flex}
+#menu{display:block}.acts .hid{display:none}header .wrap{gap:8px}.logo{margin-right:auto}}
+@media (prefers-reduced-motion:reduce){*{transition:none!important}}
+</style>
+</head>
+<body>
+<header><div class="wrap">
+<button class="logo" data-go="home" aria-label="LifeLine home"><svg width="26" height="30" viewBox="0 0 26 30" aria-hidden="true"><path d="M13 1C13 1 2 13 2 19a11 11 0 0 0 22 0C24 13 13 1 13 1z" fill="#C8283A"/><path d="M6 19h4l2-4 3 7 2-3h3" stroke="#fff" stroke-width="1.8" fill="none" stroke-linecap="round" stroke-linejoin="round"/></svg>LifeLine</button>
+<nav id="nav" aria-label="Main"><a data-go="home">Home</a><a data-go="search">Search Donors</a><a data-go="requests">Active Requests</a><a data-go="faq">Eligibility &amp; FAQs</a><a data-go="faq">Awareness</a></nav>
+<div class="acts" id="out"><button class="lnk hid" data-go="login">Login</button><button class="btn o hid" data-go="login">Register</button><button class="btn" data-go="post">Post request</button></div>
+<div class="acts" id="in" hidden><button class="lnk" data-go="dash">Ayesha</button><button class="btn o" id="lo">Log out</button></div>
+<button class="lnk" id="menu" aria-label="Menu" aria-expanded="false">Menu</button>
+</div></header>
+
+<main>
+<section data-v="home"><div class="wrap">
+<div class="hero"><div>
+<h1>Find a verified blood donor in your city</h1>
+<p class="lead">Pick a blood group and a city. Phone numbers stay private until a donor says yes.</p>
+<div class="step">1. Blood group</div><div class="chips" id="hc"></div>
+<div class="row"><div><div class="step">2. City</div><select id="hcity" aria-label="City"></select></div><button class="btn" id="hgo">3. Find donors</button></div>
+<p style="margin-top:14px"><button class="lnk" data-go="post" style="padding-left:0;color:var(--red)">Need blood for a patient? Post a request</button></p>
+</div>
+<div class="card live"><span class="tag crit">Critical request</span><div style="display:flex;gap:16px;align-items:center;margin:16px 0"><div class="bg"><b>O-</b></div><div><h3>Capital General Hospital</h3><p class="mute">Islamabad, 2 units needed</p></div></div>
+<p class="mute">Expires in</p><div class="t" id="cd">04:59:59</div><button class="btn" style="margin-top:12px" data-go="requests">See active requests</button></div></div>
+<div class="trust"><div><h3>Admin-verified requests</h3><p class="mute">Every request is checked before donors see it.</p></div><div><h3>Eligibility timer</h3><p class="mute">Donors are hidden while they recover.</p></div><div><h3>Phone shared after accept</h3><p class="mute">Only city and area are public.</p></div></div>
+<div class="hd"><h2>Active blood requests</h2><button class="lnk" data-go="requests">View all</button></div><div class="grid" id="hr"></div>
+<div class="hd"><h2>How LifeLine works</h2></div>
+<div class="steps"><div class="card"><h3>Search or post</h3><p class="mute">Find a donor or post a request with an urgency level.</p></div><div class="card"><h3>A donor accepts</h3><p class="mute">Eligible donors in your city respond.</p></div><div class="card"><h3>Contact is shared</h3><p class="mute">The donor’s phone appears only after they accept.</p></div></div>
+<div class="band"><h2>Ready to help someone today?</h2><button class="btn" data-go="login">Register as a donor</button></div>
+</div></section>
+
+<section data-v="search" hidden><div class="wrap pg">
+<h1 style="font-size:36px">Search donors</h1><p class="mute" style="margin:8px 0 20px">Find eligible donors by blood group and city.</p>
+<div class="card row"><div><label for="sg">Blood group</label><select id="sg"></select></div><div><label for="sc">City</label><select id="sc"></select></div><button class="btn" id="sgo">Search donors</button></div>
+<div class="hd"><h3 id="cnt"></h3><span class="mute">Phone hidden until accepted</span></div><div class="grid" id="dl"></div>
+</div></section>
+
+<section data-v="requests" hidden><div class="wrap pg"><h1 style="font-size:36px">Active requests</h1><p class="mute" style="margin:8px 0 20px">Requests expire automatically unless renewed.</p><div class="grid" id="ar"></div></div></section>
+
+<section data-v="post" hidden><div class="wrap pg"><h1 style="font-size:36px;margin-bottom:20px">Post a blood request</h1>
+<div class="two"><div class="card" id="pf"><form id="f" novalidate>
+<div class="f2"><div><label for="pg">Patient blood group</label><select id="pg"></select></div><div><label for="pu">Units needed</label><input id="pu" type="number" min="1" max="6" value="1"></div></div>
+<div class="f2"><div><label for="ph">Hospital name</label><input id="ph" placeholder="Type hospital name"></div><div><label for="pc">City</label><select id="pc"></select></div></div>
+<label>Urgency</label><div class="urgs"><label><input type="radio" name="u" checked>Critical<small>Within hours</small></label><label><input type="radio" name="u">Urgent<small>Within 24 hours</small></label><label><input type="radio" name="u">Planned<small>Within a week</small></label></div>
+<div style="margin-bottom:16px"><label for="pr">Reason (optional)</label><textarea id="pr" rows="3"></textarea></div>
+<p class="err" id="er" hidden>Choose a blood group, enter the hospital and select a city.</p>
+<button class="btn" type="submit">Submit for approval</button></form></div>
+<div class="card"><h3>What happens next</h3><ol class="tl" id="tl"><li>Admin checks your request</li><li>Matching donors are alerted</li><li>A donor accepts</li><li>Contact details are shared</li></ol><p class="mute">Requests expire after 48 hours unless renewed.</p></div></div>
+<div class="card" id="pd" hidden><h2>Request submitted</h2><p class="mute" style="margin:8px 0">Reference LL-1042. An admin will review it shortly.</p><button class="btn" data-go="requests" style="margin-top:12px">See active requests</button></div>
+</div></section>
+
+<section data-v="faq" hidden><div class="wrap pg"><h1 style="font-size:36px;margin-bottom:20px">Eligibility &amp; FAQs</h1>
+<details open><summary>When can I donate again?</summary><p class="mute" style="margin-top:8px">After a donation you are hidden for about 3 months. The admin sets the exact period from medical guidelines.</p></details>
+<details><summary>Who sees my phone number?</summary><p class="mute" style="margin-top:8px">Only a requester whose request you accept.</p></details>
+<details><summary>What happens to old requests?</summary><p class="mute" style="margin-top:8px">They expire automatically after 48 hours unless renewed.</p></details>
+<div class="hd"><h2>Who can receive from whom</h2></div><div class="card"><table><tr><th>Patient group</th><th>Can receive from</th></tr><tr><td>O-</td><td>O-</td></tr><tr><td>O+</td><td>O+, O-</td></tr><tr><td>A+</td><td>A+, A-, O+, O-</td></tr><tr><td>B+</td><td>B+, B-, O+, O-</td></tr><tr><td>AB+</td><td>All groups</td></tr></table></div>
+</div></section>
+
+<section data-v="login" hidden><div class="wrap pg" style="max-width:460px"><h1 style="font-size:34px;margin-bottom:20px">Log in or register</h1>
+<div class="card"><div class="row" style="margin-bottom:16px"><button class="btn" id="rd" aria-pressed="true">I’m a donor</button><button class="btn o" id="rr" aria-pressed="false">I need blood</button></div>
+<div style="margin-bottom:12px"><label for="em">Email</label><input id="em" type="email" value="ayesha@example.com"></div><div style="margin-bottom:16px"><label for="pw">Password</label><input id="pw" type="password" value="password"></div><button class="btn" id="li" style="width:100%">Log in as donor</button></div></div></section>
+
+<section data-v="dash" hidden><div class="wrap pg"><div class="dash">
+<div class="side"><a class="on">Dashboard</a><a data-toast="Edit profile screen is not part of this prototype">Edit profile</a><a data-toast="Incoming requests are below">Incoming requests</a><a data-toast="Donation history is below">Donation history</a></div>
+<div><div class="hd" style="margin-top:0"><h1 style="font-size:32px">Welcome back, Ayesha</h1><div style="display:flex;gap:10px;align-items:center"><span id="avl" style="font-weight:600">Available to donate</span><button class="sw" id="sw" role="switch" aria-checked="true" aria-label="Available to donate"></button></div></div>
+<div class="card ring"><svg width="130" height="130" viewBox="0 0 130 130" role="img" aria-label="24 days left"><circle cx="65" cy="65" r="52" fill="none" stroke="var(--line)" stroke-width="12"/><circle cx="65" cy="65" r="52" fill="none" stroke="var(--teal)" stroke-width="12" stroke-linecap="round" stroke-dasharray="326.7" stroke-dashoffset="87" transform="rotate(-90 65 65)"/><text x="65" y="72" text-anchor="middle" font-family="Poppins,sans-serif" font-weight="700" font-size="28" fill="var(--ink)">24</text></svg><div><h2>Eligible again in 24 days</h2><p class="mute">Last donation: 12 Aug 2026</p></div></div>
+<div class="hd"><h2>Incoming requests</h2></div><div class="grid" id="ir" style="grid-template-columns:1fr"></div>
+<div class="hd"><h2>Donation history</h2></div><div class="card"><table><tr><th>Date</th><th>Hospital</th><th>Units</th></tr><tr><td>12 Aug 2026</td><td>Capital General Hospital</td><td>1</td></tr><tr><td>20 May 2026</td><td>Rawal Teaching Hospital</td><td>1</td></tr><tr><td>14 Feb 2026</td><td>Garden City Hospital</td><td>1</td></tr></table></div></div></div></div></section>
+</main>
+<footer><div class="wrap"><h3 style="color:#fff">LifeLine</h3><p>LifeLine connects donors and requesters. It does not replace hospital blood banks. Prototype for CS 313 Web Engineering, Assignment 2.</p></div></footer>
+<div id="toast" role="status" hidden></div>
+<script>
+const $=s=>document.querySelector(s),$$=s=>[...document.querySelectorAll(s)];
+const G=["A+","A-","B+","B-","AB+","AB-","O+","O-"],C=["Islamabad","Rawalpindi","Lahore"];
+const DN=[["Ayesha K.","B+","Saddar","Rawalpindi",0],["Bilal R.","O-","F-8","Islamabad",0],["Hira S.","A+","Gulberg","Lahore",0],["Usman T.","B+","G-10","Islamabad",24],["Sana M.","AB+","Bahria Town","Rawalpindi",0],["Zain A.","O+","DHA","Lahore",0]];
+const RQ=[["O-","Capital General Hospital","Islamabad",2,"5 hours","crit","Critical"],["B+","Rawal Teaching Hospital","Rawalpindi",1,"22 hours","urg","Urgent"],["A+","Garden City Hospital","Lahore",3,"3 days","plan","Planned"],["AB-","Capital General Hospital","Islamabad",1,"2 days","plan","Planned"]];
+const S={g:"",c:""};let timer;
+const opt=(a,ph)=>`<option value="">${ph}</option>`+a.map(x=>`<option>${x}</option>`).join("");
+const rq=r=>`<article class="card rq"><div class="bg"><b>${r[0]}</b></div><div><h3>${r[1]}</h3><p class="mute">${r[2]}, ${r[3]} ${r[3]>1?"units":"unit"}</p><p class="mute">Expires in ${r[4]}</p></div><span class="tag ${r[5]}">${r[6]}</span><button class="btn o" data-don>I can donate</button></article>`;
+const toast=m=>{const t=$("#toast");t.textContent=m;t.hidden=false;clearTimeout(timer);timer=setTimeout(()=>t.hidden=true,2600)};
+function drawChips(){$("#hc").innerHTML=G.map(g=>`<button class="chip" data-g="${g}" aria-pressed="${S.g==g}">${g}</button>`).join("")}
+function drawSearch(){const l=DN.filter(d=>(!S.g||d[1]==S.g)&&(!S.c||d[3]==S.c)).sort((a,b)=>a[4]-b[4]);
+$("#cnt").textContent=l.length+(l.length==1?" donor found":" donors found");
+$("#dl").innerHTML=l.length?l.map((d,i)=>`<article class="card dn"><div class="bg"><b>${d[1]}</b></div><div><h3>${d[0]}</h3><p class="mute">${d[2]}, ${d[3]}</p><span class="tag ${d[4]?"urg":"plan"}">${d[4]?"Eligible in "+d[4]+" days":"Available"}</span></div><button class="btn" data-ask ${d[4]?"disabled":""}>${d[4]?"Not available yet":"Request contact"}</button></article>`).join(""):`<div class="card" style="grid-column:1/-1"><h3>No donors match yet</h3><p class="mute" style="margin:6px 0 12px">Post a request and matching donors will be alerted.</p><button class="btn" data-go="post">Post a request</button></div>`;
+$("#sg").value=S.g;$("#sc").value=S.c}
+function go(v){location.hash=v}
+function show(){const v=(location.hash||"#home").slice(1),ok=$$("[data-v]").some(s=>s.dataset.v==v)?v:"home";
+$$("[data-v]").forEach(s=>s.hidden=s.dataset.v!=ok);
+$$("#nav a").forEach(a=>{a.removeAttribute("aria-current");if(a.dataset.go==ok&&a.textContent!="Awareness")a.setAttribute("aria-current","page")});
+$("#nav").classList.remove("open");$("#menu").setAttribute("aria-expanded","false");scrollTo(0,0);
+if(ok=="search")drawSearch();if(ok=="post"){$("#pf").parentElement.hidden=false;$("#pd").hidden=true;$("#er").hidden=true}}
+function drawIn(){$("#ir").innerHTML=[["O-","Capital General Hospital","Islamabad",2,"5 hours","crit","Critical"],["A+","Rawal Teaching Hospital","Rawalpindi",1,"22 hours","urg","Urgent"]].map(r=>`<article class="card rq" style="grid-template-columns:auto 1fr auto">${rq(r).replace(/^<article[^>]*>/,"").replace(/<button.*<\/button><\/article>$/,"")}<div style="display:flex;gap:8px"><button class="btn" data-acc>Accept</button><button class="btn o" data-dec>Decline</button></div></article>`).join("")}
+document.addEventListener("click",e=>{const t=e.target.closest("button,a");if(!t)return;
+if(t.dataset.go)go(t.dataset.go);
+if(t.dataset.g){S.g=S.g==t.dataset.g?"":t.dataset.g;drawChips()}
+if(t.hasAttribute("data-don")){t.textContent="Response sent";t.disabled=true;toast("Response sent. The requester is notified.")}
+if(t.hasAttribute("data-ask")){t.textContent="Request sent";t.disabled=true;toast("Request sent. The donor will be asked to accept.")}
+if(t.dataset.toast)toast(t.dataset.toast);
+if(t.hasAttribute("data-acc")){const a=t.closest("article");a.querySelector("div[style]").outerHTML='<div class="ok">Accepted. Your phone is now shared with this requester only.</div>'}
+if(t.hasAttribute("data-dec")){t.closest("article").remove();toast("Request declined")}
+if(t.id=="menu"){const o=$("#nav").classList.toggle("open");t.setAttribute("aria-expanded",o)}
+if(t.id=="sw"){const o=t.getAttribute("aria-checked")!="true";t.setAttribute("aria-checked",o);$("#avl").textContent=o?"Available to donate":"Not available";toast(o?"You are visible to matching requests":"You are hidden from requests")}
+if(t.id=="rd"||t.id=="rr"){const d=t.id=="rd";$("#rd").className="btn"+(d?"":" o");$("#rr").className="btn"+(d?" o":"");$("#li").textContent=d?"Log in as donor":"Log in to post a request";$("#li").dataset.r=d?"d":"r"}
+if(t.id=="li"){$("#out").hidden=true;$("#in").hidden=false;go(t.dataset.r=="r"?"post":"dash")}
+if(t.id=="lo"){$("#out").hidden=false;$("#in").hidden=true;go("home")}
+if(t.id=="hgo"){S.c=$("#hcity").value;go("search");if(location.hash=="#search")drawSearch()}
+if(t.id=="sgo"){S.g=$("#sg").value;S.c=$("#sc").value;drawSearch()}});
+$("#f").addEventListener("submit",e=>{e.preventDefault();if(!$("#pg").value||!$("#ph").value.trim()||!$("#pc").value){$("#er").hidden=false;return}
+$("#pf").parentElement.hidden=true;$("#pd").hidden=false;scrollTo(0,0)});
+addEventListener("hashchange",show);$("#f").addEventListener("input",()=>$("#er").hidden=true);
+$("#hc").innerHTML="";$("#hcity").innerHTML=opt(C,"Any city");$("#sg").innerHTML=opt(G,"Any group");$("#sc").innerHTML=opt(C,"Any city");$("#pg").innerHTML=opt(G,"Select");$("#pc").innerHTML=opt(C,"Select");
+$("#hr").innerHTML=RQ.slice(0,3).map(rq).join("");$("#ar").innerHTML=RQ.map(rq).join("");drawChips();drawIn();
+let sec=4*3600+59*60+59;setInterval(()=>{sec=sec>0?sec-1:0;const p=n=>String(n).padStart(2,"0");$("#cd").textContent=`${p(sec/3600|0)}:${p(sec%3600/60|0)}:${p(sec%60)}`},1000);
+show();
+</script>
+</body>
+</html>
